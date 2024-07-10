@@ -1,4 +1,4 @@
-package Baron_Engine.core.utils;
+package core.utils;
 
 import org.lwjgl.system.MemoryUtil;
 

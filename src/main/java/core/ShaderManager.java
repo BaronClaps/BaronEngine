@@ -1,15 +1,42 @@
-package Baron_Engine.core;
+package core;
 
+import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL30;
+import org.lwjgl.opengl.INTELBlackholeRender;
+import org.lwjgl.system.MemoryStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ShaderManager {
     private final int programId;
     private int vertexShaderID, fragmentShaderID;
 
+    private final Map<String, Integer> uniforms;
+
     public ShaderManager() throws Exception {
         programId = GL30.glCreateProgram();
         if (programId == 0)
             throw new Exception("Cannot create shader");
+
+        uniforms = new HashMap<>();
+    }
+
+    public void createUniform(String uniformName) throws Exception {
+        int uniformLocation = GL30.glGetUniformLocation(programId, uniformName);
+        if (uniformLocation < 0)
+            throw new Exception("Cannot find uniform " + uniformName);
+        uniforms.put(uniformName, uniformLocation);
+    }
+
+    public void setUniforms(String uniformName, Matrix4f value) {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            GL30.glUniformMatrix4fv(uniforms.get(uniformName), false, value.get(stack.mallocFloat(16)));
+        }
+    }
+
+    public void setUniforms(String uniformName, int value) {
+        GL30.glUniform1i(uniforms.get(uniformName), value);
     }
 
     public void createVertexShader(String shaderCode) throws Exception {
@@ -36,8 +63,8 @@ public class ShaderManager {
 
     public void link() throws Exception {
         GL30.glLinkProgram(programId);
-        if(GL30.glGetProgrami(programId,GL30.GL_COMPILE_STATUS) == 0)
-            throw new Exception("Error compiling shader. Info : " + GL30.glGetShaderInfoLog(programId, 1024));
+        /*if(GL30.glGetProgrami(programId,GL30.GL_COMPILE_STATUS) == 0)
+            throw new Exception("Error compiling shader. Info : " + GL30.glGetShaderInfoLog(programId, 1024));*/
 
         if(vertexShaderID != 0)
             GL30.glDetachShader(programId, vertexShaderID);

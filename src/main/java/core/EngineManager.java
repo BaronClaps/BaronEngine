@@ -1,7 +1,7 @@
-package Baron_Engine.core;
+package core;
 
-import Baron_Engine.core.utils.Consts;
-import Baron_Engine.test.Launcher;
+import core.utils.Consts;
+import test.Launcher;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 

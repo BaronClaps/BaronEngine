@@ -1,10 +1,11 @@
-package Baron_Engine.test;
+package test;
 
-import Baron_Engine.core.ILogic;
-import Baron_Engine.core.ObjectLoader;
-import Baron_Engine.core.RenderManager;
-import Baron_Engine.core.WindowManager;
-import Baron_Engine.core.entity.Model;
+import core.ILogic;
+import core.ObjectLoader;
+import core.RenderManager;
+import core.WindowManager;
+import core.entity.Model;
+import core.entity.Texture;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL30;
 
@@ -28,12 +29,10 @@ public class TestGame implements ILogic {
         renderer.init();
 
         float[] vertices = {
-                -0.5f, 0.5f, 0f,
+                -0.5f,  0.5f, 0f,
                 -0.5f, -0.5f, 0f,
                 0.5f, -0.5f, 0f,
-                0.5f, -0.5f, 0f,
-                0.5f, 0.5f, 0f,
-                -0.5f, 0.5f, 0f
+                0.5f,  0.5f, 0f,
         };
 
         int[] indices = {
@@ -41,7 +40,15 @@ public class TestGame implements ILogic {
             3, 1, 2
         };
 
-        model = loader.loadModel(vertices, indices);
+        float[] textureCoords = {
+                0, 0,
+                0, 1,
+                1, 1,
+                1, 0,
+        };
+
+        model = loader.loadModel(vertices, textureCoords, indices);
+        model.setTexture(new Texture(loader.loadTexture("texture/grassblock.png")));
     }
 
     @Override

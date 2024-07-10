@@ -1,8 +1,8 @@
-package Baron_Engine.test;
+package test;
 
-import Baron_Engine.core.EngineManager;
-import Baron_Engine.core.WindowManager;
-import Baron_Engine.core.utils.Consts;
+import core.EngineManager;
+import core.WindowManager;
+import core.utils.Consts;
 
 public class Launcher {
     private static WindowManager window;

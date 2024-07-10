@@ -1,4 +1,4 @@
-package Baron_Engine.core;
+package core;
 
 import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFW;

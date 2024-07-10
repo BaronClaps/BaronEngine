@@ -1,4 +1,4 @@
-package Baron_Engine.core;
+package core;
 
 public interface ILogic {
     void init() throws Exception;
